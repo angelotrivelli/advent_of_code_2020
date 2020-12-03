@@ -1,69 +1,5 @@
 library(tidyverse)
 
-# --- Day 3: Toboggan Trajectory ---
-# With the toboggan login problems resolved, you set off toward the airport. While travel by toboggan might be easy, it's certainly not safe: there's very minimal steering and the area is covered in trees. You'll need to see which angles will take you near the fewest trees.
-# 
-# Due to the local geology, trees in this area only grow on exact integer coordinates in a grid. You make a map (your puzzle input) of the open squares (.) and trees (#) you can see. For example:
-# 
-# ..##.......
-# #...#...#..
-# .#....#..#.
-# ..#.#...#.#
-# .#...##..#.
-# ..#.##.....
-# .#.#.#....#
-# .#........#
-# #.##...#...
-# #...##....#
-# .#..#...#.#
-#
-# These aren't the only trees, though; due to something you read about once 
-# involving arboreal genetics and biome stability, the same pattern repeats 
-# to the right many times:
-# 
-# ..##.........##.........##.........##.........##.........##.......  --->
-# #...#...#..#...#...#..#...#...#..#...#...#..#...#...#..#...#...#..
-# .#....#..#..#....#..#..#....#..#..#....#..#..#....#..#..#....#..#.
-# ..#.#...#.#..#.#...#.#..#.#...#.#..#.#...#.#..#.#...#.#..#.#...#.#
-# .#...##..#..#...##..#..#...##..#..#...##..#..#...##..#..#...##..#.
-# ..#.##.......#.##.......#.##.......#.##.......#.##.......#.##.....  --->
-# .#.#.#....#.#.#.#....#.#.#.#....#.#.#.#....#.#.#.#....#.#.#.#....#
-# .#........#.#........#.#........#.#........#.#........#.#........#
-# #.##...#...#.##...#...#.##...#...#.##...#...#.##...#...#.##...#...
-# #...##....##...##....##...##....##...##....##...##....##...##....#
-# .#..#...#.#.#..#...#.#.#..#...#.#.#..#...#.#.#..#...#.#.#..#...#.#  --->
-#
-# You start on the open square (.) in the top-left corner and need to reach
-#  the bottom (below the bottom-most row on your map).
-# 
-# The toboggan can only follow a few specific slopes (you opted for a
-# cheaper model that prefers rational numbers); start by counting all the 
-# trees you would encounter for the slope right 3, down 1:
-# 
-# From your starting position at the top-left, check the position that is
-# right 3 and down 1. Then, check the position that is right 3 and down 1 
-# from there, and so on until you go past the bottom of the map.
-# 
-# The locations you'd check in the above example are marked here with O 
-# where there was an open square and X where there was a tree:
-# 
-# ..##.........##.........##.........##.........##.........##.......  --->
-# #..O#...#..#...#...#..#...#...#..#...#...#..#...#...#..#...#...#..
-# .#....X..#..#....#..#..#....#..#..#....#..#..#....#..#..#....#..#.
-# ..#.#...#O#..#.#...#.#..#.#...#.#..#.#...#.#..#.#...#.#..#.#...#.#
-# .#...##..#..X...##..#..#...##..#..#...##..#..#...##..#..#...##..#.
-# ..#.##.......#.X#.......#.##.......#.##.......#.##.......#.##.....  --->
-# .#.#.#....#.#.#.#.O..#.#.#.#....#.#.#.#....#.#.#.#....#.#.#.#....#
-# .#........#.#........X.#........#.#........#.#........#.#........#
-# #.##...#...#.##...#...#.X#...#...#.##...#...#.##...#...#.##...#...
-# #...##....##...##....##...#X....##...##....##...##....##...##....#
-# .#..#...#.#.#..#...#.#.#..#...X.#.#..#...#.#.#..#...#.#.#..#...#.#  --->
-# In this example, traversing the map using this slope would cause you to 
-# encounter 7 trees.
-# 
-# Starting at the top-left corner of your map and following a slope of 
-# right 3 and down 1, how many trees would you encounter?
-
 
 slope <- str_split(read_file(file="./data/day_3/slope.txt"), pattern="\\s+", simplify = TRUE)
 
@@ -93,23 +29,25 @@ col_num_3 <- function(i,col_count) {
   return(x)
 }
 
-
+# The position sequences for row and col for the path from top-left to bottom:
 pos_row_1 <- unlist(map(0:(row_count-1), ~ row_num_1(.)))
 pos_col_3 <- unlist(map(0:(row_count-1), ~ col_num_3( ., col_count)))
 
+# display the input slope
 slope[1,]
 
 q_31 <- slope
 substr(q_31[pos_row_1],pos_col_3,pos_col_3) <- "X"
 
 q_31 <- q_31[1,]
-q_31
+q_31  # display the path down with "X" indicating each step.
 
+# Get the char on each position on the path, it's either a "." or a "#" (tree)
 path_31 <- str_sub(slope[pos_row_1],pos_col_3,pos_col_3)
 path_31
 
+# Count all the trees, the "#'s"
 num_trees_31 <- as.double(sum(str_count(path_31,"#")))
-
 num_trees_31
 
 # Your puzzle answer was 145.
@@ -137,6 +75,8 @@ num_trees_31
 # 
 # What do you get if you multiply together the number of trees
 # encountered on each of the listed slopes?
+
+# modify functions for different step sizes
 
 row_num_2 <- function(i)
 {
@@ -173,12 +113,14 @@ col_num_7 <- function(i,col_count) {
 # Right 7, down 1.
 # Right 1, down 2.
 
-
+# here's the sequences...
 pos_col_1 <- unlist(map(0:(row_count-1), ~ col_num_1( ., col_count)))
 pos_col_5 <- unlist(map(0:(row_count-1), ~ col_num_5( ., col_count)))
 pos_col_7 <- unlist(map(0:(row_count-1), ~ col_num_7( ., col_count)))
 pos_row_2 <- unlist(map(0:(row_count-1), ~ row_num_2(.)))[1:162] # because we get to bottom faster
 
+
+# compute the rest...
 
 # Right 1, down 1.
 q_11 <- slope
