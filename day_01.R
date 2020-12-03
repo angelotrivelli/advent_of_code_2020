@@ -38,7 +38,7 @@ library(tidyverse)
 # what do you get if you multiply them together?
 # 
 
-d <- read_file(file="data/day_1/day_1.txt")
+d <- read_file(file="data/day_01/day_1.txt")
 
 d <- tibble(e=str_extract_all(d,"\\d+")) %>% unnest(cols = c(e))
 

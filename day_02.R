@@ -34,7 +34,7 @@ library(tidyverse)
 # 
 # How many passwords are valid according to their policies?
 
-p_raw <- read_file(file="./data/day_2/passwords.txt")
+p_raw <- read_file(file="./data/day_02/passwords.txt")
 
 isExpectedFormat = str_count(p_raw,"\\d+\\-\\d+\\s+[a-z]{1}:\\s+[a-z]+")
 

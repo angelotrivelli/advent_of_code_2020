@@ -1,7 +1,7 @@
 library(tidyverse)
 
 
-slope <- str_split(read_file(file="./data/day_3/slope.txt"), pattern="\\s+", simplify = TRUE)
+slope <- str_split(read_file(file="./data/day_03/slope.txt"), pattern="\\s+", simplify = TRUE)
 
 # here's the dimensions... 
 row_count <- length(slope)
@@ -183,3 +183,7 @@ num_trees_12
 
 tree_product <- num_trees_11 * num_trees_12 * num_trees_31 * num_trees_51 * num_trees_71
 tree_product
+
+# Your puzzle answer was 3424528800.
+
+# Both parts of this puzzle are complete! They provide two gold stars: **
