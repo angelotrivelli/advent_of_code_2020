@@ -3,7 +3,7 @@ library(tidyverse)
 # read input, split by empty lines (2 or more consecutive newlines)
 pinput <- str_split( 
             read_file(file="./data/day_04/passport_batch_file.txt"),
-            pattern="\\n{2,}", simplify = FALSE)[[1]]
+            pattern="\\n{2,}|(\\r\\n){2,}", simplify = FALSE)[[1]]
 
 # expected passport fields are...
 # byr (Birth Year)
