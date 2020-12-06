@@ -72,8 +72,20 @@ myseat
 # Your puzzle answer was 522.
 # Both parts of this puzzle are complete! They provide two gold stars: **
   
-  
 
+# much better answer from someone else below !
+# should have recognized that the boarding pass and seat_id is just a number 
+# represented in binary digits by B|R as 1 and F|L as 0.
+# setdiff was pretty slick too.
+library(tidyverse)
+
+q1 <- read_lines("data/day_05/boarding_passes.txt") %>%
+  str_replace_all("B|R", "1") %>%
+  str_replace_all("F|L", "0") %>%
+  strtoi(base = 2) %>%
+  as_tibble() %>%
+  summarize(part1 = max(value),
+            part2 = setdiff(min(value):max(value),value))
 
 
 
