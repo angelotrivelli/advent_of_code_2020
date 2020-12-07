@@ -1,10 +1,5 @@
 library(tidyverse)
 
-# read input, split by empty lines (2 or more consecutive newlines)
-
-# For each group, count the number of questions to which anyone 
-# answered "yes". What is the sum of those counts?
-
 customs <- tibble( ans = str_split( 
                     read_file(file="./data/day_06/customs_answers.txt"),
                     pattern="\\n{2,}|(\\r\\n){2,}", simplify = FALSE)[[1]] ) %>%
